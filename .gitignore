@@ -1,0 +1,26 @@
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+
+# Local generated outputs
+/dist/
+/build/
+/.cache/
+
+# Secrets and local-only config
+.env
+.env.*
+!.env.example
+
+# Agent/session scratch
+*.log
+.tmp/
+tmp-issue-bodies/
+
+# Local archives and generated databases
+*.zip
+*.db
+*.sqlite
+*.sqlite3
