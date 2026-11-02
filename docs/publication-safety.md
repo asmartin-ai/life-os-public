@@ -41,6 +41,7 @@ docs/re-entry-copy.md
 docs/research-takeaways.md
 docs/roadmap.md
 docs/triage-surface-map.md
+.github/workflows/leak-scan.yml
 ```
 
 Private by default — never published:
@@ -50,7 +51,7 @@ Private by default — never published:
 - `prompts/`
 - `docs/research/` (dated research passes, brainstorms, and session notes)
 - `inbox/`, `logs/`, `DUMP.md`, `NEXT.md`
-- `fixtures/`, `scripts/`, `tools/`, `ui/`, `package.json`, `bun.lock`, `tsconfig.json`, linter config and workflows
+- `fixtures/`, `scripts/`, `tools/`, `ui/`, `package.json`, `bun.lock`, `tsconfig.json`, linter config and other workflows (`.github/workflows/leak-scan.yml` is the only published workflow)
 - raw email/calendar/finance/travel captures, source maps, account inventories, credentials, exports, databases, screenshots, archives
 
 `docs/roadmap.md` is a public rewrite of the private roadmap: internal ticket numbers, hardware purchases, subscription costs, and private repo names are removed. Keep it that way when refreshing.
@@ -99,10 +100,35 @@ done | grep -iE '<owner-name>|<owner-handle>|(/home/|~/Documents|~/Projects|[A-Z
 
 The validation block above contains the patterns themselves; those lines are the only expected matches in a clean scan.
 
+## Publishing
+
+The only publish path is: build the candidate in `/tmp` → scan its full history → push with an
+explicit URL. This checkout is a clone of the published mirror, so its `origin` push URL is
+disabled (`DISABLED-use-publish-mirror`); refreshes arrive as new candidates built from the
+allowlist.
+
+```sh
+git clone https://github.com/asmartin-ai/life-os-public.git /tmp/lo-public   # candidate base
+# apply the allowlisted edits in /tmp/lo-public, then scan and push:
+cd /tmp/lo-public
+git log --all --format='%an|%ae|%cn|%ce' | sort -u      # no-reply identity only
+gitleaks git --redact                                   # full history; expect no leaks
+git fetch origin main
+git merge-base --is-ancestor origin/main HEAD || { echo "not a fast-forward"; exit 1; }
+git push https://x-access-token:"$(GH_TOKEN= gh auth token -u asmartin-ai)"@github.com/asmartin-ai/life-os-public.git HEAD:main
+```
+
+The scan set is fixed: the checks above, `gitleaks git` over the full history, and the private
+denylist at `~/.config/git/publish-denylist.txt`. Never publish with findings. A non-fast-forward
+means the candidate lost commits — stop and investigate instead of forcing.
+
+`.github/workflows/leak-scan.yml` repeats the scan on every push and PR: gitleaks over full
+history plus a tracked-file scan for personal machine paths and Tailscale/CGNAT addresses.
+
 ## Done-when for a public refresh
 
 - The mirror tree equals the allowlist plus reviewed rewrites; nothing else.
 - No excluded path exists in any commit in the mirror history.
 - Every author and committer is the GitHub no-reply identity.
 - The denylist scan returns zero hits outside detector patterns, on every ref that will exist after the push (`refs/heads/*`; delete stale local remote-tracking refs before scanning).
-- A human reviews the final tree and the scan before the force-push. The remote is public throughout, so the gate must pass on every refresh; the push is the last step.
+- A human reviews the final tree and the scan before the push. The remote is public throughout, so the gate must pass on every refresh; the push is the last step.
