@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-The UI research in `docs/research/2026-06-30-ui-ux-stack.md` recommends avoiding frontend-tooling sprawl. Life-OS needs small coherent surfaces: capture, action cards, receipt viewers, source inspectors, triage cards, and local admin screens.
+The 2026-06-30 UI stack research (private canonical repo) recommends avoiding frontend-tooling sprawl. Life-OS needs small coherent surfaces: capture, action cards, receipt viewers, source inspectors, triage cards, and local admin screens.
 
 ## Decision
 

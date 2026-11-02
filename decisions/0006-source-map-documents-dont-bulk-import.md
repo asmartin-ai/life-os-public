@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-`/path/to/documents` contains many domain-relevant folders: Finance, Travel, Personal, Reading, Reference, Resume, obsidian notes, Projects, Academic, and others. Some filenames indicate sensitive personal/access material.
+The documents folder contains many domain-relevant folders (finance, travel, personal records, reading, reference, resume, notes, projects, academic work, and others), and some filenames indicate sensitive personal or access material.
 
 The design language favors plain files and retrieval by recognition, but automation must not silently grow a larger pile or mishandle sensitive material.
 

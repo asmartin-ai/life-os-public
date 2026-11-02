@@ -4,7 +4,11 @@ Date: 2026-06-30
 
 ## Status
 
-Proposed — competing with `decisions/0013-content-hoarder-as-first-standard-interface.md` for first implementation slice
+Accepted — re-scoped 2026-07-07 as the first *email module* slice (overall slice 2). Per
+this decision's own done-when: 0013 is Accepted and the content-hoarder promotion card
+(confirmed 2026-07-07) is the first implementation slice. This slice follows it, proving
+the full observe→propose→approve→receipt loop and `decay_direction: increasing`
+commitments.
 
 ## Context
 

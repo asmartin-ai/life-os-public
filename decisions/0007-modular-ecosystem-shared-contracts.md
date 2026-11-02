@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-Research from `docs/research/2026-06-30-exploration.md` and `docs/research/2026-06-30-brainstorming.md` argues against building a monolithic life-management app. Existing local projects already have natural ownership boundaries:
+Research from the 2026-06-30 exploration and brainstorming passes (private canonical repo) argues against building a monolithic life-management app. Existing local projects already have natural ownership boundaries:
 
 - PKMS owns notes, capture, reading queue, and resurfacing.
 - content-hoarder owns saved external content and triage state.

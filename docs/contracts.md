@@ -120,6 +120,75 @@ These are not final schemas. Treat field names as placeholders until fixtures ar
 }
 ```
 
+### `external_item`
+
+First exercised by the content-hoarder fixture in the private canonical repo (ADR 0013); fixtures are not published in this mirror.
+
+```json
+{
+  "id": "ext_...",
+  "origin_system": "content-hoarder|email|calendar|…",
+  "origin_ref": "stable pointer in the origin system",
+  "source": "reddit|youtube|hackernews|…",
+  "source_id": "provider id",
+  "kind": "post|video|story|…",
+  "title": "…",
+  "summary": "short neutral blurb",
+  "url": "https://…",
+  "author": "optional",
+  "created_at": "ISO-8601 or null",
+  "captured_at": "ISO-8601",
+  "status_at_origin": "inbox|keep|…",
+  "processing_cost": {
+    "size": "small|medium|large",
+    "estimate": "~8 min read",
+    "effort": "read|watch|think"
+  },
+  "content_class": "interesting_reading|reference_research|meme|…",
+  "tags_hint": ["optional", "non-binding"]
+}
+```
+
+### `resurface_card`
+
+See ADR 0017. Provenance (`source_span`) and explanation (`reason`) are distinct.
+
+```json
+{
+  "id": "card_...",
+  "channel": "content_resurface|commitment_tracker|sr_review|…",
+  "external_item_id": "ext_...",
+  "source_span_id": "span_...",
+  "reason_type": "related_to_current|random_rediscovery|due_now|…",
+  "reason": "short neutral inline why-this (mandatory)",
+  "decay_direction": "decreasing|increasing",
+  "suggested_next_action": "one self-contained next step",
+  "primary_actions": ["promote", "release"],
+  "secondary_actions": ["snooze", "open_source"],
+  "working_memory_load": "low|medium|high",
+  "confidence": 0.0,
+  "ranked_at": "ISO-8601"
+}
+```
+
+### `attention_budget`
+
+See ADR 0016. Policy document, not an ML score. Default caps are 0 (opt-in).
+
+```json
+{
+  "id": "budget_...",
+  "channel": "content_resurface",
+  "max_cards_per_day": 1,
+  "quiet_hours": { "start": "22:00", "end": "08:00", "tz": "America/Chicago" },
+  "no_renag_until": null,
+  "breakpoint_policy": "coarse_only|medium_ok|any_transition",
+  "vacation_until": null,
+  "snooze_behavior": "push_to_next_breakpoint|push_to_tomorrow|push_to_next_week",
+  "decay_on_snooze": true
+}
+```
+
 ## Contract rules
 
 - Every generated action must be able to answer `Why this?`.
@@ -134,6 +203,7 @@ These are not final schemas. Treat field names as placeholders until fixtures ar
 
 Before connecting live services, build static fixtures for:
 
+- **content-hoarder saved item** → `external_item` + `source_span` + `resurface_card` + `attention_budget` + `action_receipt` — **present in the private canonical repo** (static UI in `promotion-card/`); fixtures are not published in this mirror
 - one email thread -> one `commitment` -> one `action_envelope` -> one `action_receipt`
 - one calendar event -> one prep/follow-up card
 - one finance spreadsheet row -> one subscription/bill review card

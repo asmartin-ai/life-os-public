@@ -1,87 +1,108 @@
-﻿# Publication safety
+# Publication safety
 
-Status: draft safety gate for making a public or shared remote version of `life-os`.
+Status: current policy for the public mirror `asmartin-ai/life-os-public`.
 
 ## Policy
 
-The private working repo may contain local source maps and planning notes. A public repo must be a sanitized mirror or allowlisted export, not a raw push of the private working tree.
+The private canonical repo is the working workspace. The public mirror is a sanitized, **docs-only** export built from the reviewed allowlist below — never a push of the private tree, and never `git add -A`.
 
-## Recommended repo model
+The GitHub remote is already public. The gate below is therefore not a visibility switch; it must pass for every refresh, and the force-push is the last step. A push cannot recall clones or previously published commits; GitHub keeps old commits reachable by SHA until its own expiry runs.
 
-```text
-private canonical GitHub repo
-  -> automated local safety checks
-  -> generated public sanitized mirror, if desired
-```
+Refreshing the mirror means:
 
-A private GitHub repo is the simplest password/auth-accessible clone option. GitHub repositories are public or private; private repositories are accessible only to the owner and explicitly shared collaborators. A generic "password-protected public repo" is not a normal GitHub visibility mode.
+1. Copy only the allowlisted paths from private `main`.
+2. Genericize the owner and machine paths (see below).
+3. If a path leaves the allowlist, rewrite history so no commit in the mirror still contains it.
+4. Run the validation commands, then force-push.
 
 ## Public allowlist
 
-These are candidates for public mirror inclusion after review:
+Repo hygiene and entry points:
 
-- `README.md`
-- `docs/architecture.md`
-- `docs/design-takeaways.md`
-- `docs/contracts.md`
-- `docs/implementation-roadmap.md`
-- `docs/roadmap.md`
-- `docs/research-takeaways.md`
-- `docs/research/2026-06-30-*.md` after scrub
-- `decisions/*.md` after scrub
-- `templates/*.md`
-- selected `prompts/**/*.md` after scrub
+```text
+.gitattributes
+.gitignore
+AGENTS.md
+CONTEXT.md
+GLOSSARY.md
+LICENSE
+README.md
+templates/*.md
+decisions/*.md        (reviewed individually, current and still-referenced ADRs only)
+docs/agent-patterns.md
+docs/architecture.md
+docs/charter.md
+docs/contracts.md
+docs/design-takeaways.md
+docs/modules.md
+docs/onramps.md
+docs/publication-safety.md
+docs/re-entry-copy.md
+docs/research-takeaways.md
+docs/roadmap.md
+docs/triage-surface-map.md
+```
 
-## Private by default
+Private by default — never published:
 
-Do not publish without explicit review:
+- `domains/` (life-domain briefs, including career, travel, finance, accounts, identity/access)
+- `docs/source-inventory.md`, `docs/project-map.md`
+- `prompts/`
+- `docs/research/` (dated research passes, brainstorms, and session notes)
+- `inbox/`, `logs/`, `DUMP.md`, `NEXT.md`
+- `fixtures/`, `scripts/`, `tools/`, `ui/`, `package.json`, `bun.lock`, `tsconfig.json`, linter config and workflows
+- raw email/calendar/finance/travel captures, source maps, account inventories, credentials, exports, databases, screenshots, archives
 
-- `DUMP.md`
-- `inbox/`
-- `logs/`
-- `domains/identity-access.md`
-- source maps mentioning private documents or accounts
-- any private account inventory
-- raw email/calendar/finance/travel fixtures derived from real data
-- local exports, databases, screenshots, archives, or tool output
+`docs/roadmap.md` is a public rewrite of the private roadmap: internal ticket numbers, hardware purchases, subscription costs, and private repo names are removed. Keep it that way when refreshing.
+
+## Genericization rules
+
+- Personal name and handle → "the owner" / "owner".
+- Linux home and project paths → `/path/to/…`.
+- Drive-letter paths → `/path/to/…`.
+- References to private sibling repos stay as project names (PKMS, content-hoarder), not as absolute paths.
+- The owner's purchases, prices, and account choices → generic wording: "a low-cost VPS", "an off-site object store", "a password manager", "local GPUs". Keep the decision; drop the vendor, the amount, and the personal account story.
 
 ## Denylist patterns
 
-A public mirror fails if it includes:
+A mirror fails if any ref, blob, or commit message contains:
 
-- raw email addresses
-- phone numbers or mailing addresses
-- account recovery codes
-- API keys, tokens, cookies, `.env`, OAuth credentials
-- database files: `.db`, `.sqlite`, `.sqlite3`
-- finance exports, spreadsheets, transaction CSVs
-- personal document filenames if sensitive
-- private local paths that reveal sensitive folders
-- names of private people where not needed for public research
+- the owner's name or handle (case-insensitive), or the real name behind any old commit identity
+- personal email addresses, phone numbers, mailing addresses
+- account recovery codes, API keys, tokens, cookies, `.env`, OAuth credentials
+- database files (`.db`, `.sqlite`, `.sqlite3`), finance exports, spreadsheets, transaction CSVs
+- home paths (`/home/<user>`, `~/Documents`, `~/Projects`) or drive-letter paths
+- Tailscale/CGNAT addresses or private hostnames
+- personal document filenames, private people's names where not needed for public research
 
 ## Validation commands
 
-Run from the generated public mirror/export root when possible. Running these against the private working repo will intentionally flag private-only notes, local source maps, and this safety file's own examples. These are starting checks, not a complete guarantee.
+Run from the mirror root. These are starting checks, not a complete guarantee.
 
 ```sh
-git --no-pager status --short
-find . -type f | grep -Ei '\.(env|db|sqlite|sqlite3|pem|key|p12|csv|xlsx|zip)$|secret|cookie|token|credential|recovery'
-grep -RInE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' .
-grep -RInE 'api[_-]?key|token|secret|password|credential|cookie|recovery code|oauth|client_secret' .
-grep -RInE '(/home/|~/Documents|~/Projects|[A-Za-z]:\\)' .
+git status --porcelain -uall
+git ls-files
+git ls-files | grep -Ei '\.(env|db|sqlite3?|pem|key|p12|csv|xlsx|zip)$'
+git log --all --format='%an|%ae|%cn|%ce' | sort -u
+git log --all --format='%B' | grep -iE '<owner-name>|<owner-handle>|@'
+git grep -nIiE '(/home/|~/Documents|~/Projects|[A-Za-z]:\\)'
+git grep -nIiE '(100\.[0-9]+\.[0-9]+\.[0-9]+|\.ts\.net)'
 ```
 
-For a real public push, also scan history:
+History, including deleted blobs:
 
 ```sh
-git log --all --diff-filter=A --name-only --pretty=format:
-git log --all --format='%H %s%n%b'
+git rev-list --objects --all | cut -d' ' -f1 | while read -r o; do
+  git cat-file -p "$o" 2>/dev/null
+done | grep -iE '<owner-name>|<owner-handle>|(/home/|~/Documents|~/Projects|[A-Za-z]:\\)|100\.[0-9]+\.[0-9]+\.[0-9]+'
 ```
 
-## Done-when for public mirror
+The validation block above contains the patterns themselves; those lines are the only expected matches in a clean scan.
 
-- Public export is generated from an allowlist, not from `git add -A`.
-- Denylist scan returns no actionable findings.
-- History scan has no sensitive additions.
-- A human reviews the final mirror tree before push.
-- Remote starts private until the first safety pass is proven.
+## Done-when for a public refresh
+
+- The mirror tree equals the allowlist plus reviewed rewrites; nothing else.
+- No excluded path exists in any commit in the mirror history.
+- Every author and committer is the GitHub no-reply identity.
+- The denylist scan returns zero hits outside detector patterns, on every ref that will exist after the push (`refs/heads/*`; delete stale local remote-tracking refs before scanning).
+- A human reviews the final tree and the scan before the force-push. The remote is public throughout, so the gate must pass on every refresh; the push is the last step.

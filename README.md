@@ -1,64 +1,85 @@
 # life-os
 
-A plain-file architecture and planning workspace for coordinating personal systems: PKMS, content-hoarder, future tools, and life-domain workflows.
+**The architecture and decision layer for a personal operating system.**
 
-This repo is intentionally boring at the data layer. Markdown files are the source of truth; apps, agents, dashboards, and automations should be regenerable layers over these files.
+life-os is where the three parts of **Khaos** are designed to work together:
 
-## About this repo
+| Project | Role | Where it runs |
+|---|---|---|
+| [PKMS](https://github.com/asmartin-ai/pkms) | The knowledge vault and the agent layer. Capture, today, search, tasks, reading. | Local or self-hosted; the public product direction. |
+| [content-hoarder](https://github.com/asmartin-ai/content-hoarder) | Save-everything inbox and the triage surface for external content. | Local desktop app. |
+| life-os (this repo) | Cross-system architecture, shared contracts, decision records, and re-entry design. | Documentation only. |
 
-This is the **public mirror** of `life-os`. It is built from an allowlisted subset of the private canonical repo with machine paths, account identifiers, and personal captures scrubbed. It exists so the architecture notes and research are readable from anywhere.
+The problem it attacks: a personal system with a dozen capture surfaces and a dozen tools turns into a second job. life-os keeps the pieces cooperating through one capture contract, one provenance model, one permission model, and one written record per architectural choice — so each tool can stay small and replaceable.
 
-- Private-by-default files (`DUMP.md`, the original `inbox/` and `logs/` contents, `domains/identity-access.md`) are not copied here.
-- Local paths are genericized to `/path/to/projects/…` and `/path/to/documents/…`.
-- The `inbox/`, `logs/`, and `templates/` directories in this mirror are empty templates, not the live capture/log files.
-- See `docs/publication-safety.md` for the allowlist and denylist this mirror is checked against.
+This repository is **documentation only**. There is no application to run, no build step, and no fixtures. The implementations live in the private canonical workspace and the project repos above.
 
-## Purpose
+## System shape
 
-`life-os` exists to answer:
+```mermaid
+flowchart TD
+    DL[ADHD-friendly design language] --> LO[life-os<br/>architecture, contracts, decisions]
+    LO --> PKMS[PKMS<br/>vault + agent layer]
+    LO --> CH[content-hoarder<br/>save + triage]
+    LO --> AG[Agents<br/>propose, never act silently]
+    LO --> VIEW[Derived views<br/>cards, briefs, indexes]
+    PKMS --> AG
+    CH --> AG
+    CH -->|explicit promote| PKMS
+```
 
-- What life domains does the system support?
-- Which projects own which capabilities?
-- What should be captured, resurfaced, decayed, or ignored?
-- Where are decision gates blocking progress?
-- What is the next concrete action after a lapse?
+Markdown is canonical. Apps, indexes, dashboards, and agents are derived layers: they may read, index, summarize, and render these files, but the truth stays in plain text.
 
-## Design source
+## Current state (November 2026, per the decision records and roadmap)
 
-Shared ADHD-friendly design principles are referenced from:
+- **Live capture:** a Google Keep ramp (10-minute timer, deterministic routing that learns from what is kept or dismissed) and a WhatsApp ramp (paired 2026-10-17).
+- **Deliberately off since 2026-10-17:** the Gmail ramp and the LLM router stage; routing runs on deterministic rules only.
+- **Deployment:** decision 0037 moves the Khaos home to a small Debian VPS — vault, ledger, index, and secrets on the box, with the desktop and phone as clients. Secrets use systemd encrypted credentials; off-site backup is still deferred.
+- **Contracts:** thirteen shared object contracts are defined (`capture`, `source_span`, `commitment`, `resurface_card`, `action_envelope`, `action_receipt`, `capability_grant`, and others). They are the actual integration surface between the projects.
+- **Modules:** the desk/closure, decision-support, learning, and car-capture modules are a written proposal, not shipped code.
+- **Product direction:** PKMS is the public product (self-hosted or managed hosting), built on local plain files, AI-native with full opt-out. See `CONTEXT.md` for the resolved product vocabulary.
 
-- `/path/to/projects/adhd-design-language/DESIGN-LANGUAGE.md`
+## Read in this order
 
-Do not copy those rules into this repo as a fork. This repo applies them to the life-management architecture and records project-specific exceptions only when necessary.
+1. [`docs/charter.md`](docs/charter.md) — mission, non-goals, operating principles.
+2. [`docs/architecture.md`](docs/architecture.md) — the system map, runtime, and cross-system flows.
+3. [`docs/contracts.md`](docs/contracts.md) — the shared objects every module exchanges.
+4. [`docs/onramps.md`](docs/onramps.md) — the capture ramps and their one-inbox contract.
+5. [`docs/modules.md`](docs/modules.md) — the current module proposal.
+6. [`docs/roadmap.md`](docs/roadmap.md) — what runs today, what is off, what is next.
+7. [`decisions/`](decisions/) — the architecture decision records.
 
-## Start here
+Supporting material: [`GLOSSARY.md`](GLOSSARY.md) for the shared vocabulary, [`docs/design-takeaways.md`](docs/design-takeaways.md) for the design rules applied here, [`docs/research-takeaways.md`](docs/research-takeaways.md) for the research that shaped the contracts, and [`docs/re-entry-copy.md`](docs/re-entry-copy.md) for the re-entry surface copy.
 
-1. Read `docs/charter.md` for the operating intent.
-2. Read `docs/architecture.md` for the system map.
-3. Read `docs/roadmap.md` for the current sequence.
-4. Read `docs/research-takeaways.md` for what the 2026-06-30 research changed.
-5. Add raw thoughts to `inbox/capture.md` with no filing decisions.
-6. Convert stable ideas into `domains/*.md` or `decisions/*.md` when useful.
-
-## Current structure
+## What lives here
 
 | Path | Purpose |
 |---|---|
-| `inbox/` | Zero-friction dump zone. No filing, tagging, or prioritizing required. |
-| `docs/` | System-level architecture, principles, contracts, roadmap, publication safety, research takeaways, and maps. |
-| `domains/` | Life-domain briefs: goals, source files, tools, next actions. |
-| `decisions/` | Architectural decision records and unresolved gates. |
-| `templates/` | Reusable Markdown templates for future domains and decisions. |
-| `logs/` | Done logs, re-entry notes, and session breadcrumbs. |
+| `decisions/` | Architecture decision records, one file per decision. |
+| `docs/` | Charter, architecture, contracts, onramps, modules, roadmap, design and research takeaways, publication policy. |
+| `templates/` | Markdown templates for new decisions, domain briefs, and re-entry notes. |
+| `CONTEXT.md` | Resolved product vocabulary: who the product serves and how it earns money. |
+| `GLOSSARY.md` | One word, one meaning across PKMS, content-hoarder, and life-os. |
 
-## Core rule
+## About this repository
 
-One next action beats a complete plan. Every actionable item should carry:
+This is the **public mirror** of a private canonical workspace. It is generated from a reviewed allowlist, not by pushing the private tree:
 
-- `⏱ Size`
-- `▶ Next action`
-- `✓ Done when`
+- Life-domain briefs (`domains/`), source maps, prompts, dated research and session notes, inbox captures, and logs are private by default and are not published.
+- Personal paths are genericized to `/path/to/…`, and the owner is referred to generically.
+- Documents may still refer to files that exist only in the private workspace (`inbox/`, `logs/`, `domains/`, `docs/research/`); those references are intentional and point at work that is not part of this mirror.
+- The mirror is documentation only: history contains no application code, fixtures, archives, or databases.
+- The exact allowlist, denylist, and validation commands are in [`docs/publication-safety.md`](docs/publication-safety.md).
+
+## Design position
+
+- Capture is zero-decision and faster than filing.
+- One next action beats a complete plan.
+- Every surfaced item carries a visible reason and a source.
+- Agents observe and propose; side effects follow observe → propose → approve → execute → receipt, with scoped capability grants (ADR 0009).
+- Re-entry after a lapse is a first-class flow, never a guilt surface.
+- Engagement mechanics, including streaks, are opt-in, measured, and switched off automatically when they add friction (ADR 0035). Raw backlog counts and overdue counters never appear as primary UI.
 
 ## License
 
-MIT — see `LICENSE`. Architecture notes, research, and decision records are provided as-is for reference.
+MIT — see [`LICENSE`](LICENSE). Architecture notes, research, and decision records are provided as-is for reference.

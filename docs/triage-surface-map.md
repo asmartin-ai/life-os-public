@@ -15,8 +15,8 @@ Purpose: capture what makes content-hoarder's triage surface useful before decid
 
 | Source | Location | Notes |
 |---|---|---|
-| content-hoarder triage view | `/path/to/projects/content-hoarder` | Existing ADHD-friendly rapid processing surface. |
-| Design language | `/path/to/projects/adhd-design-language/DESIGN-LANGUAGE.md` | Gesture pricing, no backlog counts, decay/release rules. |
+| content-hoarder triage view | `/path/to/projects/khaos/content-hoarder` | Existing ADHD-friendly rapid processing surface. |
+| Design language | `/path/to/projects/khaos/adhd-design-language/DESIGN-LANGUAGE.md` | Gesture pricing, no backlog counts, decay/release rules. |
 | Life-OS contracts | `docs/contracts.md` | `external_item`, `source_span`, `resurface_card`, `action_envelope`, `action_receipt`. |
 
 ## Surface mechanics to map

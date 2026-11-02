@@ -27,8 +27,8 @@ Use these initial classes as routing hints, not permanent identity:
 
 | Class | Default fate | Canonical home |
 |---|---|---|
-| Task/TODO item | Shape into one next action or not-now | `domains/` file, project file, or PKMS task surface |
-| Random thought dump | Keep raw, cluster later | `inbox/capture.md` or PKMS inbox |
+| Task/TODO item | Shape into one next action or not-now | a domain brief, project file, or PKMS task surface |
+| Random thought dump | Keep raw, cluster later | workspace capture file or PKMS inbox |
 | Personal/emotional | Private by default; no resurfacing as work | Private journal/source chosen by user |
 | Reference/research | Persist and resurface by relevance | PKMS |
 | Meme/funny | Preserve/search-only or content-hoarder decay | content-hoarder |

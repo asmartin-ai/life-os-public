@@ -24,8 +24,8 @@ Agent behavior for `life-os` should follow the shared ADHD design language.
 
 When asked to help re-enter a domain or project, the agent should read:
 
-- the relevant `domains/*.md` file
-- `logs/re-entry.md`
+- the relevant domain brief in the private canonical workspace
+- the workspace re-entry log
 - any open `decisions/*.md` related to that domain
 
 Then produce:
@@ -37,7 +37,7 @@ Then produce:
 
 ## Capture shaping command concept
 
-When asked to process `inbox/capture.md`, the agent should:
+When asked to process the capture inbox in the private canonical workspace, the agent should:
 
 - preserve raw captures unless explicitly moved
 - group by recognition-friendly themes

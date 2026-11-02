@@ -1,6 +1,6 @@
 # AGENTS.md — life-os
 
-This repo is a planning and architecture workspace for the author's personal systems.
+This repository is the public documentation mirror of a private planning and architecture workspace. Treat it as a docs-only repo: Markdown files are the source of truth, and nothing here is runnable.
 
 ## Project intent
 
@@ -9,22 +9,30 @@ This repo is a planning and architecture workspace for the author's personal sys
 - Prefer small, reversible edits over reorganizing the whole system.
 - Optimize for re-entry after lapses, not perfect organization.
 
+## Safety
+
+- Never push, merge, or touch the remote from an agent session without explicit owner approval.
+- Keep secrets out of the repo (no `.env`, tokens, keys, or credentials).
+- Do not add personal names, personal email addresses, machine paths, or private hostnames. Use `/path/to/…` and "the owner".
+- Life-domain briefs, source inventories, prompts, dated research notes, inbox captures, and logs are private by default. Do not add them here.
+
 ## Design reference
 
-Before designing a workflow, surface, agent response, capture path, task mechanic, or decay/resurfacing behavior, reference:
+Before designing a workflow, surface, agent response, capture path, task mechanic, or decay/resurfacing behavior, apply the shared ADHD-friendly design language. The private workspace holds the full rules; the rules actually applied to this system are summarized in `docs/design-takeaways.md`.
 
-- `/path/to/projects/adhd-design-language/DESIGN-LANGUAGE.md`
-
-Use that repo as the shared behavioral source of truth. Do not vendor or duplicate its full rules here.
+Do not vendor or duplicate the full design language here.
 
 ## Local conventions
 
-- New raw thoughts go in `inbox/capture.md` unless a more specific target is obvious.
 - Architectural choices go in `decisions/` using `templates/decision.md`.
-- New life areas go in `domains/` using `templates/domain.md`.
+- System-level documents live in `docs/`; the vocabulary is `CONTEXT.md` and `GLOSSARY.md`.
 - When adding action items, include:
   - `⏱ Size`
   - `▶ Next action`
   - `✓ Done when`
 - Avoid raw backlog counts, streaks, overdue copy, or guilt-framed language.
 - Pause or icebox ambiguous work; do not delete it just to make the system look clean.
+
+## Publication
+
+The public mirror is built from an allowlist. Run the validation commands in `docs/publication-safety.md` before any push, and keep the history free of excluded files.

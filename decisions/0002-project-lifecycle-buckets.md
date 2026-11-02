@@ -40,6 +40,6 @@ The lifecycle buckets are:
 
 ⏱ Size: Small
 
-▶ Next action: Add `/path/to/projects/PROJECTS.md` as the project registry source in `docs/project-map.md`.
+▶ Next action: Add `/path/to/projects/PROJECTS.md` as the project registry source in the private project map.
 
 ✓ Done when: `life-os` points at the registry instead of duplicating it.
