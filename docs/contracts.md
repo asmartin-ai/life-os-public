@@ -49,7 +49,7 @@ These are not final schemas. Treat field names as placeholders until fixtures ar
 {
   "id": "acct_...",
   "provider": "gmail|calendar|discord|github|local_file|manual",
-  "account_role": "personal|developer_ai|gaming|institutional|finance|travel|unknown",
+  "account_role": "personal|developer_ai|gaming|alumni|finance|travel|unknown",
   "display_label": "Human-safe label",
   "control_status": "user_controlled|institution_controlled|third_party|unknown",
   "sensitivity": "low|private|sensitive",
@@ -122,7 +122,7 @@ These are not final schemas. Treat field names as placeholders until fixtures ar
 
 ### `external_item`
 
-First exercised by the content-hoarder fixture in the private canonical repo (ADR 0013); fixtures are not published in this mirror.
+First exercised by `fixtures/content-hoarder/item-001.json` (ADR 0013).
 
 ```json
 {
@@ -203,7 +203,7 @@ See ADR 0016. Policy document, not an ML score. Default caps are 0 (opt-in).
 
 Before connecting live services, build static fixtures for:
 
-- **content-hoarder saved item** → `external_item` + `source_span` + `resurface_card` + `attention_budget` + `action_receipt` — **present in the private canonical repo** (static UI in `promotion-card/`); fixtures are not published in this mirror
+- **content-hoarder saved item** → `external_item` + `source_span` + `resurface_card` + `attention_budget` + `action_receipt` — **present**: `fixtures/content-hoarder/` (static UI in `promotion-card/`)
 - one email thread -> one `commitment` -> one `action_envelope` -> one `action_receipt`
 - one calendar event -> one prep/follow-up card
 - one finance spreadsheet row -> one subscription/bill review card

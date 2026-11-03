@@ -8,7 +8,7 @@ Superseded by [0035](0035-engagement-mechanics-chosen-measured-switchable.md) on
 
 ## Context
 
-Pass 08 (the 2026-07-07 dark-patterns research pass) synthesized three converging
+Pass 08 (`docs/research/2026-07-07-dark-patterns-ethics.md`) synthesized three converging
 frameworks (Center for Humane Technology, Harris, Self-Determination Theory) into a
 testable red line. Pass 08 Do-first #1: make it a decision gate, not a principle.
 

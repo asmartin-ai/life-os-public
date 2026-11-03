@@ -9,6 +9,9 @@ Thumbs.db
 /build/
 /.cache/
 
+# Dependencies
+/node_modules/
+
 # Secrets and local-only config
 .env
 .env.*

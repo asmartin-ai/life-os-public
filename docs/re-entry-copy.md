@@ -1,7 +1,6 @@
 # Welcome-back / re-entry copy candidates
 
-Status: draft for ADR 0023. Written before more surfaces ship (Pass 08 Do-first #3).
-Gate: none since 2026-10-07. ADR 0026 (engagement red line) was superseded by ADR 0035; the checks below are a record of the earlier gate.
+These draft examples illustrate the principles in [Decision 0023](../decisions/0023-re-entry-after-lapse.md). Engagement choices are governed by [Decision 0035](../decisions/0035-engagement-mechanics-chosen-measured-switchable.md).
 
 ## Hard constraints (from 0023 + 0026)
 
@@ -79,16 +78,6 @@ ADHD addendum (0026): no exploit of RSD, time-blindness guilt, or dopamine varia
 
 **Verdict:** FAIL — kept only as a regression foil for copy review.
 
-## Fixture wiring note
+## Evaluation
 
-The content-hoarder promotion-card fixture can show Candidate B as an optional
-re-entry strip above the first card (lamp mode). It must never show Candidate C
-patterns (raw counts, day gaps, streaks).
-
-Amnesty: "Release everything from the gap" stamps a single reversible
-`action_receipt` stub in the fixture; it does not touch live systems.
-
-## Open
-
-- Prefer A vs B per channel after first real dormancy return.
-- Amnesty granularity (all channels vs current channel) deferred per 0023.
+Choose copy for the surface and user context. Any release or amnesty action must clearly describe its scope and remain reversible. These examples are design candidates, not claims about a deployed feature.

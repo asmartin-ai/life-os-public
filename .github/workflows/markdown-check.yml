@@ -1,0 +1,35 @@
+name: markdown-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: markdown-check-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: check markdown
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - name: Check links, fixtures, lint, types
+        shell: bash
+        run: |
+          if [ -f package.json ]; then
+            bun install --frozen-lockfile
+            bun run check
+          else
+            bun scripts/check-markdown.ts
+          fi

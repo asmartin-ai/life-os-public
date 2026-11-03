@@ -2,7 +2,7 @@
 
 ## Mission
 
-Create a plain-file operating layer for the owner's life systems: projects, knowledge, captures, commitments, maintenance loops, and re-entry paths.
+Create a plain-file operating layer for personal systems: projects, knowledge, captures, commitments, maintenance loops, and re-entry paths.
 
 The system should help with orientation and starting, not produce a larger pile of obligations.
 

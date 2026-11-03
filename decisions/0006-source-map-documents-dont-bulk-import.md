@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-The documents folder contains many domain-relevant folders (finance, travel, personal records, reading, reference, resume, notes, projects, academic work, and others), and some filenames indicate sensitive personal or access material.
+Personal document collections can contain sensitive information, including sensitive filenames and account-related material.
 
 The design language favors plain files and retrieval by recognition, but automation must not silently grow a larger pile or mishandle sensitive material.
 
@@ -39,6 +39,6 @@ Rules:
 
 ⏱ Size: Small
 
-▶ Next action: Pick one source folder (`Finance`, `Travel`, or `obsidian_notes`) and create a one-page source map for it.
+▶ Next action: Choose one source folder and create a one-page source map for it.
 
 ✓ Done when: One domain file lists the source folder, what it owns, and what not to ingest automatically.

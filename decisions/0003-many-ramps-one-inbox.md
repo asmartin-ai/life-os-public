@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-The original capture notes list several possible PKMS on-ramps:
+The dump lists several possible PKMS on-ramps:
 
 - New tab extension
 - `Win + N` AutoHotkey shortcut on Windows
@@ -29,7 +29,7 @@ Support many capture ramps, but require them to obey one inbox contract:
 4. Route into a single shaping queue before anything becomes canonical knowledge or work.
 5. Confirm save immediately.
 
-The default local fallback remains the workspace capture file until PKMS capture is ready.
+The default local fallback remains `inbox/capture.md` until PKMS capture is ready.
 
 ## Alternatives considered
 

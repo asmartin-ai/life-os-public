@@ -4,11 +4,11 @@ Date: 2026-07-07
 
 ## Status
 
-Proposed — the owner will revisit (2026-07-28).
+Proposed.
 
 ## Context
 
-Pass 10 G.3 + Pass 08 §2.7/§4.4 (the 2026-07-07 dark-patterns research pass). Lapse
+Pass 10 G.3 + Pass 08 §2.7/§4.4 (`docs/research/2026-07-07-dark-patterns-ethics.md`). Lapse
 is a normal stage of behavior change (Prochaska & DiClemente, Verified); ADHD relapse rate
 is 100% (Pass 01) — dormancy-return is a normal flow, not an error. Pass 08 calls the
 welcome-back message "the highest-stakes ADHD design moment."

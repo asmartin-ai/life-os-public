@@ -8,11 +8,11 @@ Accepted
 
 ## Context
 
-`/path/to/projects/PROJECTS.md` already defines a useful project registry with an Active cap, live infrastructure, paused/icebox projects, done projects, reference clones, and a cleanup queue. This matches the design-language principle that pause beats delete and backlogs should not become guilt surfaces.
+A project registry can track an active cap, live infrastructure, paused projects, completed work, reference clones, and a cleanup queue. This matches the design-language principle that pause beats delete and backlogs should not become guilt surfaces.
 
 ## Decision
 
-`life-os` will treat `/path/to/projects/PROJECTS.md` as the canonical project registry for code/project lifecycle status.
+`life-os` will use a canonical project registry for code and project lifecycle status.
 
 `life-os` domain files may summarize or link to projects, but should not create a competing status taxonomy.
 
@@ -40,6 +40,6 @@ The lifecycle buckets are:
 
 ⏱ Size: Small
 
-▶ Next action: Add `/path/to/projects/PROJECTS.md` as the project registry source in the private project map.
+▶ Next action: Identify the project registry as the source for the project map.
 
 ✓ Done when: `life-os` points at the registry instead of duplicating it.

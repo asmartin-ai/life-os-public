@@ -1,6 +1,6 @@
 # Design takeaways applied from adhd-design-language
 
-Source: `/path/to/projects/khaos/adhd-design-language/DESIGN-LANGUAGE.md`
+Source: the shared ADHD-friendly design language.
 
 This file is an application guide for `life-os`, not a fork of the design language.
 
@@ -10,7 +10,7 @@ This file is an application guide for `life-os`, not a fork of the design langua
 
 ## 2. Capture is zero-decision
 
-Raw thoughts go to the workspace capture file unless a more specific destination is obvious. Capture should not require choosing a domain, project, tag, priority, or due date.
+Raw thoughts go to `inbox/capture.md` unless a more specific destination is obvious. Capture should not require choosing a domain, project, tag, priority, or due date.
 
 ## 3. One next action per surface
 

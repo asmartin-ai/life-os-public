@@ -1,4 +1,4 @@
-# 0035 — Engagement mechanics are chosen by the owner, measured, and switchable
+# 0035 — Engagement mechanics are user-chosen, measured, and switchable
 
 Date: 2026-10-07
 
@@ -8,25 +8,15 @@ Accepted (2026-10-07). Supersedes [0026](0026-engagement-red-line.md).
 
 ## Context
 
-0026 made a red line a mandatory gate and rejected streaks, loss framing, variable reward,
-leaderboards and escalating nudges. The owner decided on 2026-10-07 to drop engagement bans from
-the design language and to let agents propose mechanics that the owner picks. The research
-menu is a private PKMS research note §6. The owner picked
-if–then prompts, streak with freezes, goal-gradient progress bars, proactive Discord pings and
-fresh-start resets (a tracked PKMS work order). The owner also said they may not help and may add friction.
+Decision 0026 made a red line a mandatory gate and rejected streaks, loss framing, variable reward, leaderboards, and escalating nudges. This decision replaces blanket bans with user choice: agents may propose mechanics, but a user decides whether to adopt them. Any mechanic may add friction rather than help, so its effects need to be measured.
 
 ## Decision
 
-- Agents may propose any engagement mechanic, including ones 0026 rejected. the owner decides
-  which ones ship.
-- Every shipped mechanic has its own `enabled` switch and knobs in PKMS `tuning.json`.
-- No mechanic adds a step to capture. Prompts appear after a capture is saved, and each one can
-  be skipped with one tap.
-- Every mechanic emits events to `.ledger/events.db`. A weekly analysis reports on each one.
-  It switches a mechanic **off** when the skip/dismiss rate is above 70% over at least 10 shows
-  in each of two weeks in a row. The change is reversible and logged in `tuning-changes.jsonl`.
-  The analysis never switches a mechanic on.
-- Notifications: the today view plus Discord DM pings. No phone push and no email.
+- Agents may propose engagement mechanics, including those rejected by 0026; the user decides which to enable.
+- Each mechanic has an independent switch and configurable settings.
+- Capture never gains an extra step. Prompts appear only after capture is saved and can be skipped.
+- Measure each mechanic separately. A mechanic with sustained high dismissal rates can be switched off automatically; changes are logged and reversible. Analysis never enables a mechanic on the user's behalf.
+- Notification channels are selected by the user and should be easy to disable.
 
 ## Consequences
 
